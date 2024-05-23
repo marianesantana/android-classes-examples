@@ -2,38 +2,35 @@ package com.example.androidclassesexamples
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.RadioButton
+import android.util.Log
+import android.widget.Toast
 import com.example.androidclassesexamples.databinding.ActivityMainBinding
+import com.example.androidclassesexamples.databinding.CustomToastBinding
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var bindingToast: CustomToastBinding
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivityMainBinding.inflate(layoutInflater)
+        bindingToast = CustomToastBinding.inflate(layoutInflater)
 
-        val view = binding.root
-        setContentView(view)
+        setContentView(binding.root)
 
-
-
-
-        binding.btnOrder.setOnClickListener{
-            var rgChecketMeatId = binding.rgMeat.checkedRadioButtonId
-            var meat = findViewById<RadioButton>(rgChecketMeatId)
-
-            var cheese = binding.cbCheese.isChecked
-            var salad = binding.cbSalad.isChecked
-            var onions = binding.cbOnions.isChecked
-
-            var stringOrder = "Your order is: \n" +
-                    "${meat.text}, ${ if(cheese) "Cheese" else ""}" +
-                    "${if(salad) "Salad" else ""}" +
-                    "${if(onions) "Onions" else ""}"
-
-            binding.txtOrder.text = stringOrder
+        binding.btnToast.setOnClickListener {
+            Log.d("MainActivity", "Hello!")
+            Toast(this).apply {
+                duration = Toast.LENGTH_LONG
+                view = layoutInflater.inflate(R.layout.custom_toast, bindingToast.clToast)
+                show()
+            }
         }
+
+
 
 
     }
